@@ -60,7 +60,7 @@ class VoiceActorApiWrapper(object):
             if ul is None:
                 json['status'] = 'OK'
                 return json
-            for li in ul.find_all('li'):                
+            for li in ul.find_all('li'):
                 # TODO: 作品のカテゴリ分類を後でやる
                 logo_filename = li.h3.img['src'].split('/')[-1]
                 if logo_filename == 'cate_1.png':
@@ -98,10 +98,10 @@ class VoiceActorApiWrapper(object):
                 response = f.get(url, sleep_time=1)
                 html = response.content
                 soup = BeautifulSoup(html, 'html.parser')
-                ul = soup.find('ul', {'class': 'listItems'})
-                for li in ul.find_all('li'):
-                    vid = int(li.a['href'].split('/')[-1])
-                    vids.append(vid)
+                for ul in soup.find_all('ul', {'class': 'listItems'}):
+                    for li in ul.find_all('li'):
+                        vid = int(li.a['href'].split('/')[-1])
+                        vids.append(vid)
             cache_client.set('vid_list', vids)
         json['data']['vid_list'] = sorted(vids)
         json['status'] = 'OK'

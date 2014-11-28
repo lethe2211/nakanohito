@@ -21,7 +21,7 @@ class VoiceActorCrawler(object):
             res = (vid1, self.vaaw.search(vid1)['data']['name'], vid2, self.vaaw.search(vid2)['data']['name'], self.rbva.calculate(vid1, vid2))
             print res
             result.append(res)
-            time.sleep(1)
+            # time.sleep(1)
         result.sort(cmp=lambda x, y: cmp(y[4], x[4]))
         return result
 
