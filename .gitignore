@@ -55,3 +55,6 @@ target/
 
 # cache
 cache/
+
+# csv file
+*.csv
