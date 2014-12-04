@@ -22,9 +22,9 @@ class VoiceActorCrawler(object):
         min_relevance = float('inf')
         result = {}
 
-        for vid1, vid2 in list(itertools.combinations(vids, 2))[:20]:
+        for vid1, vid2 in list(itertools.combinations(vids, 2)):
             row = self.get_relevance(vid1, vid2)
-            if len(result) < 10:
+            if len(result) < 100:
                 result[(vid1, vid2)] = row
                 if min_relevance > row[2]:
                     min_relevance = row[2]
