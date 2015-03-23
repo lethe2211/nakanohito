@@ -57,6 +57,8 @@ class VoiceActorApiWrapper(object):
             soup = BeautifulSoup(html, 'html.parser')
             json['data']['cast'] = []
             ul = soup.find('ul', {'class': 'cast-list'})
+            worknames = set()   # 同一作品の兼役については数えない
+            roles = set()          # 役名が同じ場合，シリーズ出演とみなし，数えない
             if ul is None:
                 json['status'] = 'OK'
                 return json
@@ -71,8 +73,13 @@ class VoiceActorApiWrapper(object):
                     worktype = u'movie'
                 else:
                     worktype = 'None'
-                elem = {'wid': int(li.h3.a['href'].split('/')[-1]), 'workname': li.h3.a.string, 'role': li.div.string, 'worktype': worktype}
-                json['data']['cast'].append(elem)
+                workname = li.h3.a.string
+                role = li.div.string
+                elem = {'wid': int(li.h3.a['href'].split('/')[-1]), 'workname': workname, 'role': role, 'worktype': worktype}
+                if (not workname in worknames) and (not role in roles):
+                    json['data']['cast'].append(elem)
+                worknames.add(workname)
+                roles.add(role)
             json['status'] = 'OK'
             return json
 
@@ -111,5 +118,5 @@ if __name__ == '__main__':
     # sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
     vaw = VoiceActorApiWrapper()
     # print vaw.search_by_name(u'新谷良子')
-    # print vaw.search(vaw.name_to_id(u'阿澄佳奈'), mode='cast')
-    print vaw.get_id_list()
+    print vaw.search(1506, mode='cast')
+    # print vaw.get_id_list()

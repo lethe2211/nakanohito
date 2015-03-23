@@ -32,9 +32,13 @@ class RelevanceBetweenVoiceActors(object):
             vaaw_va2 = vaaw.search(vid2, mode='cast')
             works_va2 = [int(e['wid']) for e in vaaw_va2['data']['cast']]
             cache_client.set(str(vid2), works_va2)
-        return SetSimilarity.jaccard_similarity(set(works_va1), set(works_va2))
+        threshold = 50           # 50件出演していない声優は数えない
+        if len(works_va1) >= threshold and len(works_va2) >= threshold:
+            return SetSimilarity.jaccard_similarity(set(works_va1), set(works_va2))
+        else:
+            return -1.0
 
 if __name__ == '__main__':
     rbva = RelevanceBetweenVoiceActors()
-    print rbva.calculate(1040, 2193)
+    print rbva.calculate(1506, 1514)
     

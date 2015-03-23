@@ -16,8 +16,8 @@ class SetSimilarity(object):
         '''
         2つの集合に対して，ジャカード係数を計算する
         '''
-        if a | b == 0:
-            return None
+        if len(a | b) == 0:
+            return 0
         else:
             return len(a & b) * 1.0 / len(a | b)
 

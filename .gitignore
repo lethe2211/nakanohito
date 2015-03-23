@@ -58,3 +58,6 @@ cache/
 
 # csv file
 *.csv
+
+# file for numpy
+*.npy
