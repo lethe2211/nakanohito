@@ -117,6 +117,5 @@ class VoiceActorApiWrapper(object):
 if __name__ == '__main__':
     # sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
     vaw = VoiceActorApiWrapper()
-    # print vaw.search_by_name(u'新谷良子')
     print vaw.search(1506, mode='cast')
     # print vaw.get_id_list()
